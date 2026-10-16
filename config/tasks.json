@@ -6,19 +6,32 @@
       "title": "Auditar el flujo de aprobación y emisión de certificados",
       "repository": "AROCA84/-sindicato-operarios",
       "priority": 1,
-      "status": "ready-for-read-only-audit",
+      "status": "read-only-audit-complete-awaiting-isolated-e2e",
       "risk": "high",
-      "allowedActions": ["read-source", "map-routes", "inspect-tests", "write-report-on-agent-branch"],
-      "forbiddenActions": ["modify-main-repository", "change-payment-provider", "access-production-secrets", "read-real-supabase-data", "merge", "deploy"],
+      "allowedActions": [
+        "read-source",
+        "map-routes",
+        "inspect-tests",
+        "write-report-on-agent-branch"
+      ],
+      "forbiddenActions": [
+        "modify-main-repository",
+        "change-payment-provider",
+        "access-production-secrets",
+        "read-real-supabase-data",
+        "merge",
+        "deploy"
+      ],
       "acceptanceCriteria": [
         "Mapear desde resultado aprobado hasta vista previa y emisión del certificado",
         "Identificar todos los puntos donde se decide si debe mostrarse pago",
         "Distinguir prueba interna de certificado real sin pago",
         "Revisar persistencia de aprobado y posibles discrepancias cliente-servidor",
         "Proponer pruebas automatizadas para los casos detectados",
-        "Entregar rutas de archivos y evidencias; no cambiar el repositorio principal"
+        "Entregar rutas de archivos y evidencias; no cambiar el repositorio principal",
+        "Añadir en una rama aislada una prueba E2E que verifique que la ruta de prueba no llama a endpoints de pago"
       ],
-      "notes": "La auditoría debe ser de solo lectura sobre la web principal. El informe y cualquier prueba nueva se prepararán en el repositorio del agente, salvo autorización explícita distinta."
+      "notes": "Auditoría de código completada sobre main: /prueba-certificado redirige a /prueba-certificacion?prueba=1; el componente activa la simulación sin checkout. No se verificó el despliegue publicado. El E2E actual no prueba explícitamente que esta ruta evite las llamadas de pago. Siguiente paso: añadir una prueba E2E en una rama aislada y verificar que no se llama a /api/certificados/iniciar ni /api/certificados/pago; no modificar main ni datos reales."
     }
   ]
 }
