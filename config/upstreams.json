@@ -8,47 +8,20 @@
     "reviewRuntimeCostAndSecurity": true
   },
   "candidates": [
-    {
-      "id": "openhands-core",
-      "repository": "OpenHands/OpenHands",
-      "url": "https://github.com/OpenHands/OpenHands",
-      "purpose": "Referencia principal para diseño de agente de ingeniería y herramientas",
-      "status": "evaluate-architecture-first",
-      "licenseEvidence": "El archivo LICENSE consultado declara MIT",
-      "integrationApproach": "Estudiar componentes acotados; no importar todo el proyecto",
-      "costWarning": "La licencia abierta no cubre el coste de modelos ni del entorno de ejecución"
-    },
-    {
-      "id": "openhands-sdk",
-      "repository": "OpenHands/software-agent-sdk",
-      "url": "https://github.com/OpenHands/software-agent-sdk",
-      "purpose": "SDK modular para construir agentes",
-      "status": "evaluate-api-and-license",
-      "integrationApproach": "Comprobar compatibilidad de runtime, API, licencia y proveedor de modelo"
-    },
-    {
-      "id": "openhands-typescript-client",
-      "repository": "OpenHands/typescript-client",
-      "url": "https://github.com/OpenHands/typescript-client",
-      "purpose": "Cliente TypeScript si se elige Agent Server como backend",
-      "status": "evaluate-api-and-license",
-      "integrationApproach": "No instalar hasta validar que se adopta ese backend"
-    },
-    {
-      "id": "openhands-automation",
-      "repository": "OpenHands/automation",
-      "url": "https://github.com/OpenHands/automation",
-      "purpose": "Estudiar flujos de automatización",
-      "status": "evaluate-deployment-cost",
-      "integrationApproach": "Revisar requisitos operativos y coste antes de adoptar"
-    },
-    {
-      "id": "swe-agent",
-      "repository": "SWE-agent/SWE-agent",
-      "url": "https://github.com/SWE-agent/SWE-agent",
-      "purpose": "Patrones para resolver incidencias y evaluar cambios de código",
-      "status": "evaluate-license-and-runtime",
-      "integrationApproach": "Tomar patrones de evaluación; no combinar ejecutores hasta diseñar aislamiento"
-    }
+    {"id":"openhands-core","repository":"OpenHands/OpenHands","url":"https://github.com/OpenHands/OpenHands","purpose":"Arquitectura de agente de ingeniería y herramientas","status":"audit-source-before-adoption","integrationApproach":"Estudiar componentes acotados; no importar todo el producto"},
+    {"id":"openhands-sdk","repository":"OpenHands/software-agent-sdk","url":"https://github.com/OpenHands/software-agent-sdk","purpose":"SDK para construir agentes de ingeniería","status":"audit-source-before-adoption","integrationApproach":"Validar API, licencia, runtime y coste"},
+    {"id":"opencode","repository":"anomalyco/opencode","url":"https://github.com/anomalyco/opencode","purpose":"Agente de programación TypeScript y abstracción de herramientas/modelos","status":"compare-architecture","integrationApproach":"Comparar con OpenHands; no incorporar dos runtimes completos sin necesidad"},
+    {"id":"cline","repository":"cline/cline","url":"https://github.com/cline/cline","purpose":"Patrones de ejecución de herramientas con aprobación humana","status":"audit-permissions-and-license","integrationApproach":"Estudiar controles de aprobación y límites de herramientas"},
+    {"id":"aider","repository":"Aider-AI/aider","url":"https://github.com/Aider-AI/aider","purpose":"Flujo Git y cambios revisables","status":"study-git-workflow","integrationApproach":"Reutilizar patrones de trabajo Git; no asumir que el proyecto Python se integra directamente"},
+    {"id":"mini-swe-agent","repository":"SWE-agent/mini-swe-agent","url":"https://github.com/SWE-agent/mini-swe-agent","purpose":"Agente pequeño centrado en tareas de ingeniería","status":"evaluate-specialized-runner","integrationApproach":"Comparar simplicidad y aislamiento antes de adoptarlo"},
+    {"id":"swe-agent","repository":"SWE-agent/SWE-agent","url":"https://github.com/SWE-agent/SWE-agent","purpose":"Herramientas y evaluación para resolución de incidencias","status":"research-reference","integrationApproach":"Tomar ideas de evaluación tras revisar licencia y runtime"},
+    {"id":"goose","repository":"block/goose","url":"https://github.com/block/goose","purpose":"Agente extensible y conectores","status":"audit-runtime-and-license","integrationApproach":"Evaluar solo si encaja con el entorno disponible"},
+    {"id":"codex","repository":"openai/codex","url":"https://github.com/openai/codex","purpose":"Patrones de agente de programación y aislamiento","status":"audit-runtime-and-license","integrationApproach":"Revisar requisitos antes de cualquier adopción"},
+    {"id":"gemini-cli","repository":"google-gemini/gemini-cli","url":"https://github.com/google-gemini/gemini-cli","purpose":"Agente CLI y herramientas","status":"alternative-not-default","integrationApproach":"Comparar capacidades sin acoplar el diseño a un único proveedor"},
+    {"id":"mcp-servers","repository":"modelcontextprotocol/servers","url":"https://github.com/modelcontextprotocol/servers","purpose":"Conectores mediante MCP","status":"selective-connector-audit","integrationApproach":"Elegir servidores específicos y limitar permisos"},
+    {"id":"kilocode","repository":"Kilo-Org/kilocode","url":"https://github.com/Kilo-Org/kilocode","purpose":"Modos de trabajo y agente de programación","status":"compare-architecture","integrationApproach":"Evitar duplicar un runtime completo"},
+    {"id":"deepagents","repository":"langchain-ai/deepagents","url":"https://github.com/langchain-ai/deepagents","purpose":"Planificación y herramientas para agentes","status":"evaluate-complexity","integrationApproach":"Adoptar solo si demuestra valor para el flujo real"},
+    {"id":"autogen","repository":"microsoft/autogen","url":"https://github.com/microsoft/autogen","purpose":"Coordinación multiagente","status":"evaluate-only-if-needed","integrationApproach":"No añadir multiagente hasta demostrar que un coordinador y herramientas no bastan"},
+    {"id":"continue","repository":"continuedev/continue","url":"https://github.com/continuedev/continue","purpose":"Integración de asistencia de código con entornos de desarrollo","status":"verify-maintenance-and-license","integrationApproach":"Comprobar mantenimiento y adecuación antes de usar"}
   ]
 }
