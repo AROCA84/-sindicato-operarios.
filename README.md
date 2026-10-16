@@ -1,6 +1,6 @@
 # PLATAFORMA SINDICAL — Agente técnico
 
-Agente en construcción para ayudar a terminar la web de **PLATAFORMA SINDICAL / SINDICATO DE OPERARIOS**, coordinando los repositorios existentes y permitiendo que las personas trabajen sobre ellos de forma ordenada.
+Agente en construcción para ayudar a terminar la web de **PLATAFORMA SINDICAL / SINDICATO DE OPERARIOS**, coordinando los repositorios existentes y permitiendo que las personas trabajen con ellos de forma ordenada.
 
 ## Estado real
 **Fase 1 — catálogo multi-repositorio y descubrimiento de solo lectura.** La CLI puede listar el catálogo, comprobar accesibilidad y descubrir repositorios de la cuenta sin modificarlos. Todavía no es un agente autónomo con IA: no edita código de otros repositorios ni ejecuta cambios remotos.
@@ -18,21 +18,22 @@ npm test           # valida catálogo y política
 
 Sin token, `discover` solo puede listar repositorios públicos. Para ver repositorios privados, configura `GITHUB_TOKEN` localmente con los permisos mínimos necesarios; nunca lo guardes en el repositorio ni lo compartas en el chat.
 
-## Repositorios
-- [Catálogo propio](config/repositories.json)
-- [Candidatos upstream](config/upstreams.json)
-- [Auditoría inicial](docs/REPOSITORY_AUDIT.md)
+## Catálogos y auditorías
+- [Catálogo de repositorios propios](config/repositories.json)
+- [Candidatos públicos de agentes y herramientas](config/upstreams.json)
+- [Auditoría de repositorios propios](docs/OWN-REPOSITORIES-AUDIT.md)
+- [Auditoría del ecosistema público](docs/PUBLIC-AGENT-ECOSYSTEM-AUDIT.md)
 - [Arquitectura](docs/ARCHITECTURE.md)
 - [Reglas de seguridad](docs/SAFETY.md)
-- [Proyectos de agentes evaluados](docs/UPSTREAMS.md)
+- [Notas iniciales sobre proyectos candidatos](docs/UPSTREAMS.md)
 
 Los repositorios originales se conservan separados. No se copia código hasta comprobar su licencia, dependencias, seguridad y utilidad para la web principal.
 
 ## Próximas fases
-1. Ejecutar las pruebas automáticas de este andamiaje.
-2. Completar el inventario de todos los repositorios y sus archivos útiles.
+1. Ejecutar y revisar las pruebas automáticas de este andamiaje.
+2. Completar el inventario de repositorios y archivos útiles, tanto propios como externos.
 3. Evaluar OpenHands SDK/Agent Server frente a una implementación mínima, considerando coste y entorno.
-4. Añadir conexión segura a GitHub y adaptador de modelo configurable.
+4. Añadir conexión segura a GitHub y un adaptador de modelo configurable.
 5. Añadir entorno de ejecución aislado, revisión de cambios y pruebas automáticas.
 6. Permitir que varias personas consulten tareas, diagnósticos y PRs desde una interfaz común.
 7. Mantener el bloqueo de merge y despliegue hasta autorización explícita.
