@@ -35,6 +35,8 @@ Para una prueba local con token, define `GITHUB_TOKEN` en el entorno de ejecuci�
 - [Auditoría de repositorios propios](docs/OWN-REPOSITORIES-AUDIT.md)
 - [Auditoría del ecosistema público](docs/PUBLIC-AGENT-ECOSYSTEM-AUDIT.md)
 - [Arquitectura](docs/ARCHITECTURE.md)
+- [Evaluación del motor de agente](docs/AGENT-RUNTIME-DECISION.md)
+- [Tareas controladas](config/tasks.json)
 - [Reglas de seguridad](docs/SAFETY.md)
 
 ## Próximos pasos
