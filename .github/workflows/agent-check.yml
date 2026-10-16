@@ -28,6 +28,7 @@ jobs:
           node -e "JSON.parse(require('node:fs').readFileSync('config/repositories.json','utf8'))"
           node -e "JSON.parse(require('node:fs').readFileSync('config/upstreams.json','utf8'))"
           node -e "JSON.parse(require('node:fs').readFileSync('config/tasks.json','utf8'))"
+          node -e "const c=JSON.parse(require('node:fs').readFileSync('opencode.json','utf8')); for (const k of ['edit','bash','webfetch','websearch','task','external_directory']) if (c.permission?.[k] !== 'deny' || c.agent?.plan?.permission?.[k] !== 'deny') throw new Error('OpenCode debe denegar '+k+' globalmente y en plan'); for (const k of ['read','glob','grep','list']) if (c.permission?.[k] !== 'allow' || c.agent?.plan?.permission?.[k] !== 'allow') throw new Error('OpenCode debe permitir lectura con '+k); console.log('OpenCode read-only permissions: OK')"
       - name: Run tests
         run: npm test
       - name: Smoke test read-only commands
