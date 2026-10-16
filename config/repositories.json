@@ -57,10 +57,28 @@
       "notes": "Confirmar si sigue en uso antes de reutilizarlo."
     },
     {
+      "id": "empty-web-sindicato",
+      "fullName": "AROCA84/Web-Sindicato-",
+      "role": "Repositorio consultado; aparece vacío",
+      "priority": 7,
+      "access": "unverified",
+      "mergeOrDeployRequiresApproval": true,
+      "notes": "No usar como destino alternativo sin confirmar que el usuario quiere reutilizarlo."
+    },
+    {
+      "id": "agent-workspace",
+      "fullName": "AROCA84/-sindicato-operarios.",
+      "role": "Repositorio de trabajo del agente técnico, en construcción",
+      "priority": 8,
+      "access": "write-on-agent-branch",
+      "mergeOrDeployRequiresApproval": true,
+      "notes": "El trabajo inicial vive en agent/bootstrap; no se ha fusionado a main."
+    },
+    {
       "id": "agent-destination-requested",
       "fullName": "AROCA84/plataforma-sindical-tech-agent",
       "role": "Destino de agente indicado anteriormente",
-      "priority": 7,
+      "priority": 9,
       "access": "unverified",
       "mergeOrDeployRequiresApproval": true,
       "notes": "La conexión actual devuelve 404; no asumir que no existe. Verificar acceso y decidir si este repositorio de trabajo debe reemplazarlo."
