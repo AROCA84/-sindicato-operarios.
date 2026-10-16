@@ -3,7 +3,7 @@
 Objetivo: terminar la plataforma existente, no rehacerla desde cero. Este repositorio reúne el inventario de repositorios, la investigación de herramientas públicas y las reglas de trabajo del agente.
 
 ## Estado real
-**Fase 1: coordinación multi-repositorio en modo seguro.** Hay catálogo de repositorios, descubrimiento paginado de repositorios accesibles, búsqueda de proyectos públicos y comprobaciones de metadata. Todavía no es un agente autónomo conectado a un modelo ni una aplicación multiusuario desplegada.
+**Fase 1: coordinador seguro y auditoría LLM preparada.** Hay catálogo de repositorios, descubrimiento paginado, búsqueda pública, auditoría estática y un workflow manual OpenCode para análisis con modelo. Para ejecutar el análisis LLM falta añadir el secreto `OPENAI_API_KEY` en GitHub Actions. No es una aplicación multiusuario desplegada.
 
 ## Comandos
 Requiere Node.js 24 o posterior.
@@ -15,6 +15,7 @@ npm run search     # busca proyectos públicos de agentes y herramientas
 npm run check      # comprueba metadata de repositorios registrados
 npm run audit -- AROCA84/-sindicato-operarios  # auditoría estática de un repo del catálogo
 npm run plan       # muestra límites de seguridad
+npm run tasks      # muestra tareas controladas
 npm test           # ejecuta pruebas del catálogo
 ```
 
@@ -28,6 +29,7 @@ La auditoría es de solo lectura: revisa metadatos, árbol de archivos, manifies
 - [Modelo de acceso multiusuario y multi-repositorio](docs/MULTI-REPO-ACCESS.md)
 - [Guía de arranque](docs/START-HERE.md)
 - [Configuración OpenCode de solo lectura](opencode.json)
+- [Workflow de auditoría LLM de solo lectura](.github/workflows/opencode-readonly-audit.yml)
 
 Para una prueba local con token, define `GITHUB_TOKEN` en el entorno de ejecución, nunca dentro de archivos versionados ni en el chat. No copies tokens a issues, logs o capturas.
 
