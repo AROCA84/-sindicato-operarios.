@@ -114,6 +114,25 @@ async function searchPublicRepositories() {
 const command = process.argv[2] ?? "help";
 const registry = await loadRegistry();
 
+async function listTasks() {
+  const tasksPath = path.join(root, "config", "tasks.json");
+  const catalog = JSON.parse(await readFile(tasksPath, "utf8"));
+  if (catalog.schemaVersion !== 1 || !Array.isArray(catalog.tasks)) throw new Error("Formato de config/tasks.json no válido.");
+  const selectedId = process.argv[3];
+  const tasks = selectedId ? catalog.tasks.filter((task) => task.id === selectedId) : catalog.tasks;
+  if (selectedId && !tasks.length) throw new Error(`No existe la tarea registrada: ${selectedId}`);
+  for (const task of tasks) {
+    console.log(`[${task.priority}] ${task.id} — ${task.title}`);
+    console.log(`  Repositorio: ${task.repository}`);
+    console.log(`  Estado: ${task.status} | Riesgo: ${task.risk}`);
+    console.log(`  Permitido: ${task.allowedActions.join(", ")}`);
+    console.log(`  Prohibido: ${task.forbiddenActions.join(", ")}`);
+    console.log(`  Criterios:`);
+    for (const criterion of task.acceptanceCriteria) console.log(`    - ${criterion}`);
+    console.log("");
+  }
+}
+
 if (command === "repos") {
   console.log("Catálogo de repositorios (no se modifica ninguno):\n");
   for (const repo of [...registry.repositories].sort((a, b) => a.priority - b.priority)) {
@@ -130,7 +149,7 @@ if (command === "repos") {
     const result = await checkRepository(repo.fullName);
     console.log(`${result.state.padEnd(25)} ${result.fullName} — ${result.detail ?? `rama=${result.defaultBranch}, visibilidad=${result.visibility}, tamaño=${result.sizeKb} KB`}`);
   }
-} else if (command === "plan") {
+} else if (command === "tasks") {\n  try { await listTasks(); }\n  catch (error) { console.error(`No se pudieron listar las tareas: ${error.message}`); process.exitCode = 1; }\n} else if (command === "plan") {
   console.log("Modo seguro del agente:");
   console.log("- Inventariar y analizar por defecto; descubrir y buscar es solo lectura.");
   console.log("- Los repositorios privados requieren autenticación válida y permisos concedidos por su propietario.");
@@ -141,5 +160,5 @@ if (command === "repos") {
   console.log("\nEste prototipo todavía no es un agente LLM autónomo: es la base de coordinación multi-repositorio.");
 } else {
   console.log("PLATAFORMA SINDICAL — Agente técnico (prototipo)");
-  console.log("Uso: npm run repos | npm run discover | npm run search | npm run check | npm run plan | npm test");
+  console.log("Uso: npm run repos | npm run discover | npm run search | npm run check | npm run audit -- PROPIETARIO/REPO | npm run tasks | npm run plan | npm test");
 }
