@@ -26,5 +26,6 @@ jobs:
         run: |
           node -e "JSON.parse(require('node:fs').readFileSync('config/repositories.json','utf8'))"
           node -e "JSON.parse(require('node:fs').readFileSync('config/upstreams.json','utf8'))"
+          node -e "JSON.parse(require('node:fs').readFileSync('config/tasks.json','utf8'))"
       - name: Run tests
         run: npm test
