@@ -71,14 +71,14 @@ async function discoverRepositories(registry) {
   console.log(token
     ? "Consulta autenticada: incluye solo repositorios permitidos por la identidad y los permisos del token."
     : "Consulta pública: solo repositorios públicos propios; no revela repositorios privados ni los de colaboradores.");
-  console.log(`Ya registrados: ${repos.length - newRepos.length} | Nuevos por revisar: ${newRepos.length}\\n`);
+  console.log(`Ya registrados: ${repos.length - newRepos.length} | Nuevos por revisar: ${newRepos.length}\n`);
   if (!newRepos.length) console.log("No se encontraron repositorios nuevos sin registrar.");
   for (const repo of newRepos) {
     console.log(`[POR AUDITAR] ${repo.full_name}`);
     console.log(`  ${repo.description ?? "Sin descripción"}`);
     console.log(`  visibilidad=${repo.private ? "privado" : "público"} | rama=${repo.default_branch} | archivado=${repo.archived} | actualizado=${repo.updated_at}`);
   }
-  console.log("\\nSolo lectura: no añade repositorios al catálogo ni modifica código.");
+  console.log("\nSolo lectura: no añade repositorios al catálogo ni modifica código.");
 }
 
 async function searchPublicRepositories() {
@@ -103,21 +103,21 @@ async function searchPublicRepositories() {
     }
   }
   const sorted = [...found.values()].sort((a, b) => b.stars - a.stars);
-  console.log(`\\nRepositorios públicos candidatos únicos: ${sorted.length}\\n`);
+  console.log(`\nRepositorios públicos candidatos únicos: ${sorted.length}\n`);
   for (const repo of sorted.slice(0, 100)) {
     console.log(`[${repo.stars} stars] ${repo.fullName} | licencia=${repo.license} | actualizado=${repo.updatedAt}`);
-    console.log(`  ${repo.description}\\n  ${repo.url}`);
+    console.log(`  ${repo.description}\n  ${repo.url}`);
   }
-  console.log("\\nEsta es una lista de descubrimiento, no una auditoría de código ni una autorización para copiar.");
+  console.log("\nEsta es una lista de descubrimiento, no una auditoría de código ni una autorización para copiar.");
 }
 
 const command = process.argv[2] ?? "help";
 const registry = await loadRegistry();
 
 if (command === "repos") {
-  console.log("Catálogo de repositorios (no se modifica ninguno):\\n");
+  console.log("Catálogo de repositorios (no se modifica ninguno):\n");
   for (const repo of [...registry.repositories].sort((a, b) => a.priority - b.priority)) {
-    console.log(`[${repo.priority}] ${repo.fullName}\\n    ${repo.role}\\n    Acceso previsto: ${repo.access}`);
+    console.log(`[${repo.priority}] ${repo.fullName}\n    ${repo.role}\n    Acceso previsto: ${repo.access}`);
   }
 } else if (command === "discover") {
   try { await discoverRepositories(registry); }
@@ -125,7 +125,7 @@ if (command === "repos") {
 } else if (command === "search") {
   await searchPublicRepositories();
 } else if (command === "check") {
-  console.log("Comprobación de visibilidad en GitHub. Solo lectura.\\n");
+  console.log("Comprobación de visibilidad en GitHub. Solo lectura.\n");
   for (const repo of [...registry.repositories].sort((a, b) => a.priority - b.priority)) {
     const result = await checkRepository(repo.fullName);
     console.log(`${result.state.padEnd(25)} ${result.fullName} — ${result.detail ?? `rama=${result.defaultBranch}, visibilidad=${result.visibility}, tamaño=${result.sizeKb} KB`}`);
@@ -138,7 +138,7 @@ if (command === "repos") {
   console.log("- Cada repositorio conserva su historial; los cambios van a ramas y PRs revisables.");
   console.log("- Fusionar, tocar secretos, cambiar datos reales o desplegar requiere autorización explícita.");
   console.log("- No se ejecuta código remoto desde esta CLI.");
-  console.log("\\nEste prototipo todavía no es un agente LLM autónomo: es la base de coordinación multi-repositorio.");
+  console.log("\nEste prototipo todavía no es un agente LLM autónomo: es la base de coordinación multi-repositorio.");
 } else {
   console.log("PLATAFORMA SINDICAL — Agente técnico (prototipo)");
   console.log("Uso: npm run repos | npm run discover | npm run search | npm run check | npm run plan | npm test");
