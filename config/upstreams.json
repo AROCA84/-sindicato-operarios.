@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "policy": {
+    "reviewLicenseBeforeReuse": true,
+    "pinVersionsBeforeAdoption": true,
+    "copyWholeRepositoryByDefault": false,
+    "preserveCopyrightAndNotices": true,
+    "reviewRuntimeCostAndSecurity": true
+  },
+  "candidates": [
+    {
+      "id": "openhands-core",
+      "repository": "OpenHands/OpenHands",
+      "url": "https://github.com/OpenHands/OpenHands",
+      "purpose": "Referencia principal para diseño de agente de ingeniería y herramientas",
+      "status": "evaluate-architecture-first",
+      "licenseEvidence": "El archivo LICENSE consultado declara MIT",
+      "integrationApproach": "Estudiar componentes acotados; no importar todo el proyecto",
+      "costWarning": "La licencia abierta no cubre el coste de modelos ni del entorno de ejecución"
+    },
+    {
+      "id": "openhands-sdk",
+      "repository": "OpenHands/software-agent-sdk",
+      "url": "https://github.com/OpenHands/software-agent-sdk",
+      "purpose": "SDK modular para construir agentes",
+      "status": "evaluate-api-and-license",
+      "integrationApproach": "Comprobar compatibilidad de runtime, API, licencia y proveedor de modelo"
+    },
+    {
+      "id": "openhands-typescript-client",
+      "repository": "OpenHands/typescript-client",
+      "url": "https://github.com/OpenHands/typescript-client",
+      "purpose": "Cliente TypeScript si se elige Agent Server como backend",
+      "status": "evaluate-api-and-license",
+      "integrationApproach": "No instalar hasta validar que se adopta ese backend"
+    },
+    {
+      "id": "openhands-automation",
+      "repository": "OpenHands/automation",
+      "url": "https://github.com/OpenHands/automation",
+      "purpose": "Estudiar flujos de automatización",
+      "status": "evaluate-deployment-cost",
+      "integrationApproach": "Revisar requisitos operativos y coste antes de adoptar"
+    },
+    {
+      "id": "swe-agent",
+      "repository": "SWE-agent/SWE-agent",
+      "url": "https://github.com/SWE-agent/SWE-agent",
+      "purpose": "Patrones para resolver incidencias y evaluar cambios de código",
+      "status": "evaluate-license-and-runtime",
+      "integrationApproach": "Tomar patrones de evaluación; no combinar ejecutores hasta diseñar aislamiento"
+    }
+  ]
+}
