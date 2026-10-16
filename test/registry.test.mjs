@@ -24,3 +24,14 @@ test("los proyectos upstream están catalogados para evaluación y no para copia
   assert.equal(config.policy.copyWholeRepositoryByDefault, false);
   assert.equal(config.policy.reviewLicenseBeforeReuse, true);
 });
+
+test("la primera tarea audita certificados sin permitir cambios en producción", async () => {
+  const tasks = JSON.parse(await readFile(new URL("../config/tasks.json", import.meta.url), "utf8"));
+  const task = tasks.tasks.find((item) => item.id === "web-audit-certificate-flow");
+  assert.ok(task);
+  assert.equal(task.repository, "AROCA84/-sindicato-operarios");
+  assert.ok(task.allowedActions.includes("read-source"));
+  assert.ok(task.forbiddenActions.includes("modify-main-repository"));
+  assert.ok(task.forbiddenActions.includes("merge"));
+  assert.ok(task.forbiddenActions.includes("deploy"));
+});
