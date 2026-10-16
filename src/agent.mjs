@@ -149,7 +149,10 @@ if (command === "repos") {
     const result = await checkRepository(repo.fullName);
     console.log(`${result.state.padEnd(25)} ${result.fullName} — ${result.detail ?? `rama=${result.defaultBranch}, visibilidad=${result.visibility}, tamaño=${result.sizeKb} KB`}`);
   }
-} else if (command === "tasks") {\n  try { await listTasks(); }\n  catch (error) { console.error(`No se pudieron listar las tareas: ${error.message}`); process.exitCode = 1; }\n} else if (command === "plan") {
+} else if (command === "tasks") {
+  try { await listTasks(); }
+  catch (error) { console.error(`No se pudieron listar las tareas: ${error.message}`); process.exitCode = 1; }
+} else if (command === "plan") {
   console.log("Modo seguro del agente:");
   console.log("- Inventariar y analizar por defecto; descubrir y buscar es solo lectura.");
   console.log("- Los repositorios privados requieren autenticación válida y permisos concedidos por su propietario.");
