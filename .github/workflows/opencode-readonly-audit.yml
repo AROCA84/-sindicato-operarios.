@@ -1,0 +1,84 @@
+name: OpenCode read-only website audit
+
+on:
+  workflow_dispatch:
+    inputs:
+      focus:
+        description: "Área que debe priorizar el análisis"
+        required: true
+        default: "Flujo de aprobado y certificado de prueba sin pago"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  read-only-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout agent coordinator
+        uses: actions/checkout@v4
+
+      - name: Verify provider secret exists
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "::error::Falta el secreto OPENAI_API_KEY. Añádelo en Settings > Secrets and variables > Actions del repositorio del agente."
+            exit 1
+          fi
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Download public website source (read only)
+        run: git clone --depth 1 https://github.com/AROCA84/-sindicato-operarios.git website-source
+
+      - name: Configure OpenCode read-only permissions
+        working-directory: website-source
+        run: |
+          cat > opencode.json <<'EOF'
+          {
+            "$schema": "https://opencode.ai/config.json",
+            "tools": {
+              "write": false,
+              "edit": false,
+              "bash": false
+            },
+            "agent": {
+              "plan": {
+                "description": "Auditoría de código de solo lectura. No ejecutar comandos ni editar archivos.",
+                "tools": {
+                  "write": false,
+                  "edit": false,
+                  "bash": false
+                }
+              }
+            }
+          }
+          EOF
+
+      - name: Install OpenCode CLI
+        run: npm install --global opencode-ai
+
+      - name: Analyze website with OpenCode (read only)
+        working-directory: website-source
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          AUDIT_FOCUS: ${{ inputs.focus }}
+        run: |
+          set -o pipefail
+          opencode run --agent plan --model openai/gpt-5 "Analiza este repositorio de forma estrictamente estática y de solo lectura. Prioridad: ${AUDIT_FOCUS}. No propongas asumir que el código funciona si no hay pruebas. Identifica archivos y líneas relevantes, flujo actual, hipótesis separadas de hechos, riesgos, pruebas automatizadas recomendadas y pasos de reproducción. No ejecutes comandos, no modifiques archivos, no accedas a servicios externos ni datos reales, no hagas pagos, no cambies credenciales, no despliegues. Entrega un informe en español con resumen, evidencias por ruta, diagnóstico probable, pruebas recomendadas y limitaciones." > ../opencode-audit-report.md
+
+      - name: Upload OpenCode audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: opencode-readonly-website-audit
+          path: opencode-audit-report.md
+          if-no-files-found: error
+          retention-days: 14
