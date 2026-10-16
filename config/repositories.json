@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "primaryProject": "AROCA84/-sindicato-operarios",
+  "repositories": [
+    {"id":"production-web","fullName":"AROCA84/-sindicato-operarios","role":"Web principal en desarrollo y producción","priority":1,"access":"read-write-with-approval","mergeOrDeployRequiresApproval":true,"notes":"Repositorio canónico. No publicar, fusionar PRs ni cambiar secretos sin autorización explícita."},
+    {"id":"platform-legacy","fullName":"AROCA84/sindicato-operarios-platform","role":"Versión anterior y documentación de arquitectura","priority":2,"access":"read-only-until-audited","mergeOrDeployRequiresApproval":true,"notes":"Referencia histórica. La documentación antigua menciona Stripe y no refleja el flujo actual con myPOS."},
+    {"id":"web-esit","fullName":"AROCA84/Web-esit","role":"Proyecto Next.js de estado por confirmar","priority":3,"access":"read-only-until-audited","mergeOrDeployRequiresApproval":true,"notes":"El árbol consultado de main no confirmó una aplicación completa. No asumir que contiene componentes reutilizables."},
+    {"id":"html-prototype","fullName":"AROCA84/-sindicato-operarios2","role":"Prototipo HTML de referencia","priority":4,"access":"read-only-until-audited","mergeOrDeployRequiresApproval":true,"notes":"Referencia visual/funcional; no es backend ni base de producción."},
+    {"id":"minimal-web","fullName":"AROCA84/Web","role":"Repositorio público que aparece vacío en el inventario consultado","priority":5,"access":"read-only-until-audited","mergeOrDeployRequiresApproval":true,"notes":"No aporta código comprobado por ahora."},
+    {"id":"minimal-web-legacy","fullName":"AROCA84/sindicato-operarios-web","role":"Repositorio público que aparece vacío en el inventario consultado","priority":6,"access":"read-only-until-audited","mergeOrDeployRequiresApproval":true,"notes":"No aporta código comprobado por ahora."},
+    {"id":"empty-web-sindicato","fullName":"AROCA84/Web-Sindicato-","role":"Repositorio público que aparece vacío en el inventario consultado","priority":7,"access":"read-only-until-audited","mergeOrDeployRequiresApproval":true,"notes":"No usar como destino alternativo sin confirmar que se quiere reutilizar."},
+    {"id":"agent-workspace","fullName":"AROCA84/-sindicato-operarios.","role":"Espacio de trabajo del agente técnico","priority":8,"access":"write-on-agent-branch","mergeOrDeployRequiresApproval":true,"notes":"Cambios del agente en agent/bootstrap y PR borrador; no se ha fusionado a main."}
+  ],
+  "discovery": {
+    "lastOwnerListingAt": "2026-10-16",
+    "visibleOwnerRepositories": 8,
+    "limitation": "El listado consultado devolvió ocho repositorios asociados al propietario. No demuestra acceso a repositorios privados de otras cuentas ni a todos los repositorios públicos de GitHub.",
+    "requestedDestination": "AROCA84/plataforma-sindical-tech-agent",
+    "requestedDestinationStatus": "unverified-404-from-current-connection"
+  },
+  "policy": {
+    "neverMergeOrDeployWithoutExplicitApproval": true,
+    "neverCopySecrets": true,
+    "preserveSourceRepositories": true,
+    "auditBeforeReuse": true,
+    "preferBranchesAndPullRequests": true,
+    "publicSearchDoesNotGrantWriteAccess": true
+  }
+}

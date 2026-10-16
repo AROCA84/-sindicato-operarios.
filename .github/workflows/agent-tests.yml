@@ -1,0 +1,27 @@
+name: Agent scaffold checks
+
+on:
+  push:
+    branches: ["main", "agent/**"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Validate repository catalog and policy
+        run: npm test
+      - name: Smoke test read-only commands
+        run: |
+          npm run repos
+          npm run plan

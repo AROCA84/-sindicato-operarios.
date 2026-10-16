@@ -1,0 +1,18 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "tools": {
+    "write": false,
+    "edit": false,
+    "bash": false
+  },
+  "agent": {
+    "plan": {
+      "description": "Auditoría de solo lectura de Plataforma Sindical. No modificar archivos, no ejecutar comandos ni tocar datos reales.",
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false
+      }
+    }
+  }
+}

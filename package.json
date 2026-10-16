@@ -1,0 +1,20 @@
+{
+  "name": "plataforma-sindical-tech-agent",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Agente técnico coordinador para Plataforma Sindical y Sindicato de Operarios",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "repos": "node src/agent.mjs repos",
+    "discover": "node src/agent.mjs discover",
+    "search": "node src/agent.mjs search",
+    "check": "node src/agent.mjs check",
+    "audit": "node src/audit.mjs",
+    "plan": "node src/agent.mjs plan",
+    "test": "node --test",
+    "tasks": "node src/agent.mjs tasks"
+  }
+}
