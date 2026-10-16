@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "primaryProject": "AROCA84/-sindicato-operarios",
+  "repositories": [
+    {
+      "id": "production-web",
+      "fullName": "AROCA84/-sindicato-operarios",
+      "role": "Web principal en desarrollo y producción",
+      "priority": 1,
+      "access": "read-write-with-approval",
+      "mergeOrDeployRequiresApproval": true,
+      "notes": "No publicar, fusionar PRs ni cambiar secretos sin autorización explícita."
+    },
+    {
+      "id": "platform-legacy",
+      "fullName": "AROCA84/sindicato-operarios-platform",
+      "role": "Versión anterior y documentación de arquitectura",
+      "priority": 2,
+      "access": "read-only-until-audited",
+      "mergeOrDeployRequiresApproval": true,
+      "notes": "Revisar diferencias y reutilizar solo código validado; documentación antigua menciona Stripe y puede no reflejar decisiones actuales."
+    },
+    {
+      "id": "web-esit",
+      "fullName": "AROCA84/Web-esit",
+      "role": "Proyecto Next.js con componentes potencialmente reutilizables",
+      "priority": 3,
+      "access": "read-only-until-audited",
+      "mergeOrDeployRequiresApproval": true,
+      "notes": "Auditar dependencias, licencias, componentes y origen antes de copiar código."
+    },
+    {
+      "id": "html-prototype",
+      "fullName": "AROCA84/-sindicato-operarios2",
+      "role": "Prototipo HTML de referencia",
+      "priority": 4,
+      "access": "read-only-until-audited",
+      "mergeOrDeployRequiresApproval": true,
+      "notes": "Usar como referencia visual/funcional, no asumir que es la base de producción."
+    },
+    {
+      "id": "minimal-web",
+      "fullName": "AROCA84/Web",
+      "role": "Repositorio con contenido mínimo detectado",
+      "priority": 5,
+      "access": "read-only-until-audited",
+      "mergeOrDeployRequiresApproval": true,
+      "notes": "Confirmar si sigue en uso antes de reutilizarlo."
+    },
+    {
+      "id": "minimal-web-legacy",
+      "fullName": "AROCA84/sindicato-operarios-web",
+      "role": "Repositorio con README mínimo detectado",
+      "priority": 6,
+      "access": "read-only-until-audited",
+      "mergeOrDeployRequiresApproval": true,
+      "notes": "Confirmar si sigue en uso antes de reutilizarlo."
+    },
+    {
+      "id": "agent-destination-requested",
+      "fullName": "AROCA84/plataforma-sindical-tech-agent",
+      "role": "Destino de agente indicado anteriormente",
+      "priority": 7,
+      "access": "unverified",
+      "mergeOrDeployRequiresApproval": true,
+      "notes": "La conexión actual devuelve 404; no asumir que no existe. Verificar acceso y decidir si este repositorio de trabajo debe reemplazarlo."
+    }
+  ],
+  "policy": {
+    "neverMergeOrDeployWithoutExplicitApproval": true,
+    "neverCopySecrets": true,
+    "preserveSourceRepositories": true,
+    "auditBeforeReuse": true,
+    "preferBranchesAndPullRequests": true
+  }
+}
