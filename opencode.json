@@ -1,17 +1,31 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "tools": {
-    "write": false,
-    "edit": false,
-    "bash": false
+  "permission": {
+    "read": "allow",
+    "glob": "allow",
+    "grep": "allow",
+    "list": "allow",
+    "edit": "deny",
+    "bash": "deny",
+    "webfetch": "deny",
+    "websearch": "deny",
+    "task": "deny",
+    "external_directory": "deny"
   },
   "agent": {
     "plan": {
       "description": "Auditoría de solo lectura de Plataforma Sindical. No modificar archivos, no ejecutar comandos ni tocar datos reales.",
-      "tools": {
-        "write": false,
-        "edit": false,
-        "bash": false
+      "permission": {
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "list": "allow",
+        "edit": "deny",
+        "bash": "deny",
+        "webfetch": "deny",
+        "websearch": "deny",
+        "task": "deny",
+        "external_directory": "deny"
       }
     }
   }
