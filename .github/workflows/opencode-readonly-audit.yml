@@ -45,28 +45,32 @@ jobs:
           cat > opencode.json <<'EOF'
           {
             "$schema": "https://opencode.ai/config.json",
-            "tools": {
-              "write": false,
-              "edit": false,
-              "bash": false
-            },
             "permission": {
-              "write": "deny",
+              "read": "allow",
+              "glob": "allow",
+              "grep": "allow",
+              "list": "allow",
               "edit": "deny",
-              "bash": "deny"
+              "bash": "deny",
+              "webfetch": "deny",
+              "websearch": "deny",
+              "task": "deny",
+              "external_directory": "deny"
             },
             "agent": {
               "plan": {
                 "description": "Auditoría de código de solo lectura. No ejecutar comandos ni editar archivos.",
-                "tools": {
-                  "write": false,
-                  "edit": false,
-                  "bash": false
-                },
                 "permission": {
-                  "write": "deny",
+                  "read": "allow",
+                  "glob": "allow",
+                  "grep": "allow",
+                  "list": "allow",
                   "edit": "deny",
-                  "bash": "deny"
+                  "bash": "deny",
+                  "webfetch": "deny",
+                  "websearch": "deny",
+                  "task": "deny",
+                  "external_directory": "deny"
                 }
               }
             }
