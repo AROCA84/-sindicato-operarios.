@@ -40,3 +40,47 @@ Fecha: 16 de octubre de 2026. Inspección de solo lectura de archivos públicos 
 ## Límites
 
 No se ha accedido a secretos, a datos de afiliados, a Supabase ni a la configuración de Vercel. No se afirma que el flujo de pago funcione correctamente o falle: solo se ha leído el código citado.
+
+## Segunda inspección: ruta de prueba y certificado (solo lectura)
+
+Archivos adicionales consultados en la rama `main` del repositorio de la web:
+- `app/prueba-certificado/page.tsx`
+- `app/prueba-certificacion/page.tsx`
+- `components/certificate-preview.tsx`
+- `components/course-exam.tsx`
+- `app/certificado/[id]/page.tsx`
+- `tests/e2e/test-flow.spec.ts`
+- `app/api/tests/submit/route.ts`
+- `app/api/tests/result/route.ts`
+- `app/api/certificados/iniciar/route.ts`
+- `app/api/certificados/pago/route.ts`
+- `app/api/certificados/estado/route.ts`
+- `app/api/certificados/notify/route.ts`
+
+### Ruta de previsualización
+
+1. `/prueba-certificado` redirige a `/prueba-certificacion?prueba=1`.
+2. La página de prueba muestra un aviso de entorno simulado y pasa a `CertificatePreview` con una puntuación de 18/20.
+3. `CertificatePreview` detecta `prueba=1`, establece el código `SDO-PRUEBA-INTERNA` y activa la vista confirmada sin consultar el checkout.
+4. Su función de inicio de pago contiene un retorno temprano para la prueba interna y no debe llamar a `/api/certificados/iniciar`.
+
+**Conclusión del código leído:** la ruta de prueba está diseñada para evitar pagos reales. No se pudo confirmar el comportamiento del despliegue activo porque no se abrió el sitio en un navegador ni se ejecutó una prueba E2E contra producción. Si el sitio publicado sigue llevando al pago desde esa URL, hay que comparar el commit desplegado con `main` y reproducir la ruta exacta antes de tocar código.
+
+### Flujo real tras aprobar
+
+- El cliente envía las respuestas a `/api/tests/submit`; el servidor calcula la puntuación y guarda el intento.
+- `/api/tests/result` recupera un intento aprobado por afiliado y curso para restaurar el aprobado.
+- `/api/certificados/iniciar` valida en servidor que el intento exista, esté aprobado, pertenezca al curso y corresponda a la afiliación; después prepara/reutiliza el certificado.
+- `/api/certificados/pago` genera la petición firmada de checkout myPOS.
+- `/api/certificados/notify` valida la firma de la notificación y actualiza el estado del certificado.
+- `/api/certificados/estado` solo informa emisión cuando `pago_realizado` es verdadero y `estado` es `emitido`.
+- `app/certificado/[id]/page.tsx` no confía en `score` ni `total` enviados por el navegador: valida el intento o el código del certificado en servidor.
+
+### Hueco de cobertura detectado
+
+El E2E existente cubre la ruta de test interna `/pruebas/test` y algunas denegaciones de acceso a certificados, pero **no incluye una prueba explícita para `/prueba-certificado` que compruebe que aparece la previsualización y que no se llama a las rutas de pago**. Esa debería ser la primera prueba automatizada añadida en una rama de trabajo, con datos ficticios y sin modificar producción.
+
+### Límites de esta inspección
+
+Es un análisis de código estático; no se ha hecho ningún cargo, petición a datos reales, cambio de archivos en la web principal ni despliegue. No demuestra que el flujo completo funcione en el entorno publicado.
+
