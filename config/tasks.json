@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "tasks": [
+    {
+      "id": "web-audit-certificate-flow",
+      "title": "Auditar el flujo de aprobación y emisión de certificados",
+      "repository": "AROCA84/-sindicato-operarios",
+      "priority": 1,
+      "status": "ready-for-read-only-audit",
+      "risk": "high",
+      "allowedActions": ["read-source", "map-routes", "inspect-tests", "write-report-on-agent-branch"],
+      "forbiddenActions": ["modify-main-repository", "change-payment-provider", "access-production-secrets", "read-real-supabase-data", "merge", "deploy"],
+      "acceptanceCriteria": [
+        "Mapear desde resultado aprobado hasta vista previa y emisión del certificado",
+        "Identificar todos los puntos donde se decide si debe mostrarse pago",
+        "Distinguir prueba interna de certificado real sin pago",
+        "Revisar persistencia de aprobado y posibles discrepancias cliente-servidor",
+        "Proponer pruebas automatizadas para los casos detectados",
+        "Entregar rutas de archivos y evidencias; no cambiar el repositorio principal"
+      ],
+      "notes": "La auditoría debe ser de solo lectura sobre la web principal. El informe y cualquier prueba nueva se prepararán en el repositorio del agente, salvo autorización explícita distinta."
+    }
+  ]
+}
