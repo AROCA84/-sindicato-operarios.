@@ -26,6 +26,8 @@ La auditoría es de solo lectura: revisa metadatos, árbol de archivos, manifies
 - **Colaboradores:** cada persona debe autorizar su propia cuenta o recibir acceso explícito al repositorio. No se comparten contraseñas ni tokens.
 - **Mínimo privilegio:** comenzar con lectura; habilitar escritura solo donde haga falta, en ramas de trabajo.
 - [Modelo de acceso multiusuario y multi-repositorio](docs/MULTI-REPO-ACCESS.md)
+- [Guía de arranque](docs/START-HERE.md)
+- [Configuración OpenCode de solo lectura](opencode.json)
 
 Para una prueba local con token, define `GITHUB_TOKEN` en el entorno de ejecución, nunca dentro de archivos versionados ni en el chat. No copies tokens a issues, logs o capturas.
 
