@@ -50,6 +50,11 @@ jobs:
               "edit": false,
               "bash": false
             },
+            "permission": {
+              "write": "deny",
+              "edit": "deny",
+              "bash": "deny"
+            },
             "agent": {
               "plan": {
                 "description": "Auditoría de código de solo lectura. No ejecutar comandos ni editar archivos.",
@@ -57,6 +62,11 @@ jobs:
                   "write": false,
                   "edit": false,
                   "bash": false
+                },
+                "permission": {
+                  "write": "deny",
+                  "edit": "deny",
+                  "bash": "deny"
                 }
               }
             }
@@ -64,7 +74,7 @@ jobs:
           EOF
 
       - name: Install OpenCode CLI
-        run: npm install --global opencode-ai
+        run: npm install --global opencode-ai@1.1.1
 
       - name: Analyze website with OpenCode (read only)
         working-directory: website-source
