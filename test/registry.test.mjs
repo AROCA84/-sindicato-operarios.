@@ -16,3 +16,11 @@ test("la política bloquea fusiones y despliegues sin autorización", async () =
   assert.equal(config.policy.preserveSourceRepositories, true);
   assert.equal(config.policy.auditBeforeReuse, true);
 });
+
+test("los proyectos upstream están catalogados para evaluación y no para copia ciega", async () => {
+  const config = JSON.parse(await readFile(new URL("../config/upstreams.json", import.meta.url), "utf8"));
+  assert.ok(config.candidates.some((item) => item.repository === "OpenHands/OpenHands"));
+  assert.ok(config.candidates.some((item) => item.repository === "SWE-agent/SWE-agent"));
+  assert.equal(config.policy.copyWholeRepositoryByDefault, false);
+  assert.equal(config.policy.reviewLicenseBeforeReuse, true);
+});
