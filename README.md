@@ -10,7 +10,7 @@ Requiere Node.js 24 o posterior.
 
 ```bash
 npm run repos      # muestra el catálogo conocido
-npm run discover   # descubre todos los repositorios visibles en las páginas consultadas
+npm run discover   # descubre repositorios visibles para las credenciales disponibles
 npm run search     # busca proyectos públicos de agentes y herramientas
 npm run check      # comprueba metadata de repositorios registrados
 npm run plan       # muestra límites de seguridad
@@ -22,6 +22,7 @@ npm test           # ejecuta pruebas del catálogo
 - **Privados:** solo podrá verlos si una persona autoriza credenciales válidas con permisos suficientes. No existe un permiso mágico que abra todos los repositorios.
 - **Colaboradores:** cada persona debe autorizar su propia cuenta o recibir acceso explícito al repositorio. No se comparten contraseñas ni tokens.
 - **Mínimo privilegio:** comenzar con lectura; habilitar escritura solo donde haga falta, en ramas de trabajo.
+- [Modelo de acceso multiusuario y multi-repositorio](docs/MULTI-REPO-ACCESS.md)
 
 Para una prueba local con token, define `GITHUB_TOKEN` en el entorno de ejecución, nunca dentro de archivos versionados ni en el chat. No copies tokens a issues, logs o capturas.
 
