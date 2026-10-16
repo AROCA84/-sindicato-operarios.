@@ -8,6 +8,7 @@
   "scripts": {
     "repos": "node src/agent.mjs repos",
     "discover": "node src/agent.mjs discover",
+    "search": "node src/agent.mjs search",
     "check": "node src/agent.mjs check",
     "plan": "node src/agent.mjs plan",
     "test": "node --test"
