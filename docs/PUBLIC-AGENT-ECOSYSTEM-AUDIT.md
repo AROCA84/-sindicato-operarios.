@@ -1,53 +1,50 @@
 # Auditoría del ecosistema público de agentes de programación
 
-Fecha de revisión inicial: 16 de octubre de 2026.
+Fecha de comprobación de metadatos: 16 de octubre de 2026.
 
-El objetivo no es incorporar todo GitHub ni combinar a ciegas proyectos incompatibles. El objetivo es buscar repositorios públicos relevantes, leer sus licencias, arquitectura, dependencias, historial y límites operativos, y reutilizar módulos concretos para construir un agente propio que ayude a terminar la plataforma existente.
+Objetivo: elegir componentes para un agente propio que termine la web ya avanzada, no reconstruir la plataforma desde cero. La búsqueda de repositorios públicos se hace por consultas relevantes; no es posible afirmar que se hayan inspeccionado literalmente todos los repositorios de GitHub. Los candidatos se van ampliando por tandas y se auditan antes de reutilizar código.
 
-## Candidatos de ingeniería
+## Primera comparación basada en metadatos de GitHub
 
-| Repositorio | Uso potencial | Decisión inicial |
-|---|---|---|
-| OpenHands/OpenHands | Orquestación y ejecución de tareas de ingeniería | Estudiar arquitectura; no copiar el producto entero |
-| OpenHands/software-agent-sdk | SDK para construir agentes de ingeniería | Evaluar API y compatibilidad |
-| anomalyco/opencode | Agente TypeScript y abstracción de herramientas/modelos | Comparar arquitectura con OpenHands |
-| cline/cline | Aprobación humana y ejecución de herramientas | Estudiar el modelo de permisos |
-| Aider-AI/aider | Flujo Git y cambios revisables | Adoptar patrones, no importar la aplicación Python completa |
-| SWE-agent/mini-swe-agent | Ciclo de resolución de incidencias más pequeño | Evaluar como ejecutor especializado |
-| SWE-agent/SWE-agent | Herramientas y evaluación de tareas de código | Referencia de investigación, comparar con mini-swe-agent |
-| block/goose | Agente local extensible y conectores | Evaluar solo si encaja con el entorno disponible |
-| openai/codex | Patrones de agente de programación y aislamiento | Revisar licencia, requisitos y compatibilidad antes de cualquier uso |
-| google-gemini/gemini-cli | Agente CLI y herramientas | Alternativa, no dependencia obligatoria |
-| modelcontextprotocol/servers | Conectores reutilizables mediante MCP | Elegir servidores específicos tras auditar permisos y mantenimiento |
-| Kilo-Org/kilocode | Agente de programación con modos de trabajo | Comparar, evitando duplicar funciones ya elegidas |
-| langchain-ai/deepagents | Patrones de agentes con planificación y herramientas | Evaluar si la complejidad adicional se justifica |
-| microsoft/autogen | Coordinación multiagente | No adoptar sin demostrar que necesitamos varios agentes |
-| continuedev/continue | Integración con entornos de desarrollo | Verificar estado de mantenimiento y adecuación antes de adoptar |
+| Proyecto | Lenguaje / licencia detectada por GitHub | Uso potencial | Decisión provisional |
+|---|---|---|---|
+| [OpenHands/software-agent-sdk](https://github.com/OpenHands/software-agent-sdk) | Python / MIT | SDK modular para agentes de ingeniería | POC candidato. Revisar instalación, ejecución aislada, dependencias y uso de modelos. |
+| [anomalyco/opencode](https://github.com/anomalyco/opencode) | TypeScript / MIT | Agente de programación completo; lenguaje cercano al stack de la web | Candidato para comparar como motor externo/CLI. No importar todo el repositorio al proyecto web. |
+| [SWE-agent/mini-swe-agent](https://github.com/SWE-agent/mini-swe-agent) | Python / MIT | Ejecutor ligero de tareas de programación | Candidato a ejecutor de incidencias; verificar requisitos y controles del entorno. |
+| [Aider-AI/aider](https://github.com/Aider-AI/aider) | Python / Apache-2.0 | Flujo de programación con Git y cambios revisables | Referencia para flujos Git y revisión, no primera opción para integrar en Next.js. |
+| [OpenHands/OpenHands](https://github.com/OpenHands/OpenHands) | Pendiente de auditoría específica de licencia y runtime | Entorno más amplio de agente de ingeniería | Referencia arquitectónica; evaluar coste y complejidad. |
+| [cline/cline](https://github.com/cline/cline) | Pendiente de auditoría específica de licencia y runtime | Agente de programación con aprobaciones y herramientas | Estudiar permisos y ciclo de confirmación humana. |
+| [block/goose](https://github.com/block/goose) | Pendiente de confirmar URL canónica, licencia y runtime | Agente extensible | No adoptar hasta verificar metadatos y repositorio canónico. |
 
-## Reglas para la auditoría
+Las licencias de la tabla son metadatos del repositorio, no una revisión legal completa de dependencias, componentes de terceros o archivos individuales. Antes de copiar código hay que revisar el archivo LICENSE, avisos de copyright y licencias transitivas.
 
-Para cada repositorio candidato hay que registrar:
-1. URL, licencia real en el archivo LICENSE y avisos de terceros.
-2. Actividad reciente, releases, issues abiertos, estado archivado y responsables.
-3. Lenguaje, estructura, dependencias, versión de runtime y tamaño de la integración.
-4. Capacidades exactas: lectura, edición, ejecución de comandos, pruebas, Git, PRs, MCP y permisos.
-5. Requisitos de modelos, claves, contenedores, máquinas virtuales, red y coste.
-6. Riesgos de ejecución de código, exposición de secretos, prompt injection y acceso a otros repositorios.
-7. Qué módulo concreto se reutilizaría, por qué, cómo se probaría y cómo se revertiría.
+## Recomendación técnica inicial
 
-## Arquitectura prevista para Plataforma Sindical
+No mezclar varios agentes completos ni crear un sistema multiagente complejo todavía. Primero hacer una prueba comparativa pequeña:
 
-- Un **coordinador** mantiene el catálogo de repositorios y asigna cada tarea al repositorio propietario.
-- Los **adaptadores** permiten cambiar de agente o proveedor de modelo sin rehacer la plataforma.
-- Los **conectores** leen repositorios, incidencias, documentación y resultados de pruebas.
-- Un **entorno aislado** ejecuta las comprobaciones y limita las escrituras.
-- Un **revisor** entrega diff, pruebas, riesgos y recomendaciones.
-- Las modificaciones empiezan en ramas de trabajo. Fusionar, cambiar datos reales, tocar secretos o desplegar requiere autorización explícita.
+1. **OpenCode** como candidato de motor TypeScript independiente.
+2. **OpenHands SDK** como candidato de SDK Python.
+3. **mini-swe-agent** como alternativa ligera para tareas puntuales.
 
-## No confundir “incluir todos” con mezclar el código
+La prueba debe usar una rama temporal del repositorio principal y una incidencia concreta, sin secretos ni datos reales. Comparar: capacidad de leer el repo, proponer cambios, ejecutar pruebas, mostrar un diff, detenerse ante permisos insuficientes, consumo de modelo y facilidad para revertir. No hay una prueba de ejecución completada todavía.
 
-Los repositorios se integran en el catálogo de conocimiento y herramientas del agente, no necesariamente como dependencias del mismo programa. Copiar aplicaciones enteras produciría conflictos de lenguajes, dependencias, licencias, ejecución y seguridad. Solo se incorporarán componentes justificados y comprobados.
+## Diseño del agente propio
 
-## Estado de verificación
+- **Coordinador:** catálogo de repositorios, tareas, estado y asignación de trabajo.
+- **Adaptador GitHub:** lectura de repositorios, ramas, incidencias, commits y PRs mediante permisos mínimos.
+- **Motor intercambiable:** evita acoplar la plataforma a un solo proveedor de IA.
+- **Ejecutor aislado:** tareas en un entorno temporal, sin credenciales de producción por defecto.
+- **Revisor:** diff, pruebas, riesgos, archivos tocados y pasos de reversión.
+- **Acceso multiusuario:** cada persona autoriza su cuenta; se registra el alcance exacto de sus permisos.
+- **Control de cambios:** escritura solo en ramas de trabajo. Merge, despliegue, cambios en Supabase, pagos y secretos requieren aprobación explícita.
 
-La primera exploración ha confirmado que los repositorios anteriores son accesibles públicamente y ha consultado metadatos como rama principal y estado archivado en GitHub. Esto no equivale a una auditoría completa de código ni confirma que todos sean aptos para reutilización. Las licencias y los requisitos deben comprobarse individualmente antes de adoptar código.
+## Búsqueda de repositorios
+
+La búsqueda debe mantenerse abierta a proyectos públicos relevantes: agentes de código, SDKs, sandboxes, adaptadores GitHub, MCP, evaluación, seguridad y ejecución de tareas. La lista de candidatos se amplía con búsquedas adicionales, pero ningún proyecto se considera seguro o apto por tener muchas estrellas.
+
+## Límites actuales
+
+- La CLI puede consultar catálogos y buscar metadatos; no es todavía una aplicación multiusuario.
+- OAuth/GitHub App, almacenamiento cifrado de credenciales, sandbox de ejecución y conexión al modelo todavía no están implementados.
+- No se ha ejecutado una prueba comparativa de los agentes.
+- Los modelos, API y alojamiento pueden tener coste aunque el código sea abierto.
