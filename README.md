@@ -13,9 +13,12 @@ npm run repos      # muestra el catálogo conocido
 npm run discover   # descubre repositorios visibles para las credenciales disponibles
 npm run search     # busca proyectos públicos de agentes y herramientas
 npm run check      # comprueba metadata de repositorios registrados
+npm run audit -- AROCA84/-sindicato-operarios  # auditoría estática de un repo del catálogo
 npm run plan       # muestra límites de seguridad
 npm test           # ejecuta pruebas del catálogo
 ```
+
+La auditoría es de solo lectura: revisa metadatos, árbol de archivos, manifiestos, señales de tecnología, pruebas y workflows. No ejecuta código del repositorio auditado ni verifica por sí sola que compile.
 
 ## Acceso a repositorios
 - **Públicos:** el agente puede buscar sus metadatos y leer código público.
