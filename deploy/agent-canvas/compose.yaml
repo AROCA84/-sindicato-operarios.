@@ -1,6 +1,6 @@
 services:
   agent-canvas:
-    image: ghcr.io/openhands/agent-canvas:1.18.0
+    image: ghcr.io/openhands/agent-canvas:1.24.0
     ports:
       # Solo accesible desde esta máquina. No publicar directamente en Internet.
       - "127.0.0.1:8000:8000"
