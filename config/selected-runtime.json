@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "goal": "Coordinar colaboradores y agentes para trabajar en ramas del repositorio de Sindicato de Operarios, con revisión antes de fusionar o desplegar.",
+  "decision": "Use OpenHands Agent Canvas as the operator interface and orchestration shell; its software-agent-sdk provides the agent runtime; add only selected MCP servers when a specific connector is required.",
+  "components": [
+    {
+      "id": "openhands-agent-canvas",
+      "repository": "OpenHands/OpenHands",
+      "url": "https://github.com/OpenHands/OpenHands",
+      "role": "Interfaz de trabajo y control para lanzar y supervisar agentes",
+      "license": "MIT (verify current LICENSE at adoption)",
+      "deployment": "Docker/self-hosted host; not a Vercel-only workload",
+      "status": "selected"
+    },
+    {
+      "id": "openhands-agent-sdk",
+      "repository": "OpenHands/software-agent-sdk",
+      "url": "https://github.com/OpenHands/software-agent-sdk",
+      "role": "Runtime de agente, herramientas, conversaciones y espacios de trabajo",
+      "license": "MIT (verify current LICENSE at adoption)",
+      "deployment": "Used by OpenHands Agent Server/Canvas; do not vendor the whole repo into this CLI",
+      "status": "selected-as-runtime-dependency"
+    },
+    {
+      "id": "mcp-servers",
+      "repository": "modelcontextprotocol/servers",
+      "url": "https://github.com/modelcontextprotocol/servers",
+      "role": "Conectores opcionales; elegir un servidor concreto solo cuando haga falta",
+      "license": "Check the individual server's license before adoption",
+      "deployment": "Add only a selected connector with minimum permissions",
+      "status": "selected-for-connectors"
+    }
+  ],
+  "excludedForInitialBootstrap": [
+    {
+      "repository": "SWE-agent/mini-swe-agent",
+      "reason": "No añadir un segundo agente ejecutor todavía; OpenHands ya aporta el runtime inicial y duplicar runtimes aumenta complejidad."
+    },
+    {
+      "repository": "anomalyco/opencode",
+      "reason": "Mantener como alternativa de CLI; no instalar otro runtime completo en la primera configuración."
+    }
+  ],
+  "targetRepository": "AROCA84/-sindicato-operarios",
+  "accessRules": [
+    "Cada colaborador usa su propia cuenta GitHub y recibe acceso explícito al repositorio web.",
+    "El agente trabaja en una copia/branch de trabajo; no modifica main directamente.",
+    "No almacenar tokens en el repositorio, logs ni prompts.",
+    "No fusionar, tocar secretos, datos reales de Supabase, pagos ni producción sin aprobación humana.",
+    "Un modelo compatible y su credencial son necesarios para razonamiento LLM; código open source no significa inferencia gratuita."
+  ],
+  "readiness": {
+    "sourceRepositoriesSelected": true,
+    "deploymentManifestAdded": true,
+    "publicMultiuserDeployment": false,
+    "reason": "El runtime requiere un host persistente seguro y configuración de modelo. Vercel serverless no es el lugar adecuado para ejecutar directamente Agent Canvas/Agent Server."
+  }
+}
