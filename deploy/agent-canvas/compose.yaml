@@ -1,0 +1,10 @@
+services:
+  agent-canvas:
+    image: ghcr.io/openhands/agent-canvas:1.18.0
+    ports:
+      # Solo accesible desde esta máquina. No publicar directamente en Internet.
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ${HOME}/.openhands:/home/openhands/.openhands
+      - ${PROJECTS_PATH:-./workspace}:/projects
+    restart: unless-stopped
